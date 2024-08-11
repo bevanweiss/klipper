@@ -176,3 +176,7 @@ version 2.2 DDL minus example directory, empty/extra files
 The n32g45x directory contains parts of code from:
   https://github.com/RT-Thread/rt-thread/tree/master/bsp/n32g452xx/Libraries/N32_Std_Driver
 version v1.0.1 (77638c17877c4b6b0b81e189a36bb08b3384923b)
+
+The lgvl directory contains file from:
+https://github.com/lvgl/lvgl
+commit e1c0b21b2723d391b885de4b2ee5cc997eccca91 (20240320)

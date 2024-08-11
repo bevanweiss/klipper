@@ -93,6 +93,9 @@ src-$(CONFIG_CANSERIAL) += $(canbus-src-y) generic/canbus.c stm32/chipid.c
 src-$(CONFIG_USBCANBUS) += $(usb-src-y) $(canbus-src-y)
 src-$(CONFIG_USBCANBUS) += stm32/chipid.c generic/usb_canbus.c
 src-$(CONFIG_HAVE_GPIO_HARD_PWM) += stm32/hard_pwm.c
+src-$(CONFIG_HAVE_GPIO_PARALLEL) += stm32/parallel.c
+src-$(CONFIG_WANT_LGVL_DISPLAYS) += stm32/lvgl.c
+src-$(CONFIG_DMA) += stm32/dma.c
 
 # Binary output file rules
 target-y += $(OUT)klipper.bin

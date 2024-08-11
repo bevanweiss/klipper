@@ -2,6 +2,7 @@
 #define __STM32_GPIO_H
 
 #include <stdint.h> // uint32_t
+#include "parallelcmds.h"
 
 struct gpio_out {
     void *regs;
@@ -54,5 +55,21 @@ struct i2c_config i2c_setup(uint32_t bus, uint32_t rate, uint8_t addr);
 void i2c_write(struct i2c_config config, uint8_t write_len, uint8_t *write);
 void i2c_read(struct i2c_config config, uint8_t reg_len, uint8_t *reg
               , uint8_t read_len, uint8_t *read);
+
+struct parallel_config {
+    uint8_t flags;
+    uint8_t data_width;
+};
+
+struct parallel_config parallelbus_setup(uint32_t bus, uint32_t addr_mask);
+void paralleldev_setup(struct paralleldev_s *dev);
+void paralleldev_write(struct paralleldev_s *dev, uint32_t addr_start, uint8_t addr_inc, uint16_t data_len, const uint8_t *data);
+void paralleldev_read(struct paralleldev_s *dev, uint32_t addr_start, uint8_t addr_inc, uint16_t data_len, uint8_t *data);
+
+struct dma_config {
+    void *chan;
+};
+
+struct dma_config dma_setup(uint32_t channel);
 
 #endif // gpio.h

@@ -24,6 +24,9 @@ PYTHON=python3
 # Source files
 src-y =
 dirs-y = src
+#ifdef WANT_LGVL_DISPLAYS
+dirs-y += $(shell find lib/lvgl/src -type d)
+#endif
 
 # Default compiler flags
 cc-option=$(shell if test -z "`$(1) $(2) -S -o /dev/null -xc /dev/null 2>&1`" \
@@ -35,7 +38,17 @@ CFLAGS := -iquote $(OUT) -iquote src -iquote $(OUT)board-generic/ \
     -ffunction-sections -fdata-sections -fno-delete-null-pointer-checks
 CFLAGS += -flto=auto -fwhole-program -fno-use-linker-plugin -ggdb3
 
+# Include LVGL if required
+#ifdef WANT_LGVL_DISPLAYS
+LVGL_PATH = ${shell pwd}/lib/lvgl
+include $(LVGL_PATH)/lvgl.mk
+CFLAGS += -Ilib/lvgl
+#endif
+
 OBJS_klipper.elf = $(patsubst %.c, $(OUT)src/%.o,$(src-y))
+#ifdef WANT_LGVL_DISPLAYS
+OBJS_klipper.elf += $(patsubst $(LVGL_PATH)/%.c, $(OUT)lib/lvgl/%.o,$(LVGL_CSRCS))
+#endif
 OBJS_klipper.elf += $(OUT)compile_time_request.o
 CFLAGS_klipper.elf = $(CFLAGS) -Wl,--gc-sections
 

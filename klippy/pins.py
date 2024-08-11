@@ -13,7 +13,7 @@ class error(Exception):
 # Command translation
 ######################################################################
 
-re_pin = re.compile(r'(?P<prefix>[ _]pin=)(?P<name>[^ ]*)')
+re_pin = re.compile(r'(?P<prefix>[ _]pin[s]?=)(?P<names>[^ ]*)')
 
 class PinResolver:
     def __init__(self, validate_aliases=True):
@@ -40,16 +40,18 @@ class PinResolver:
                 self.aliases[existing_alias] = pin
     def update_command(self, cmd):
         def pin_fixup(m):
-            name = m.group('name')
-            pin_id = self.aliases.get(name, name)
-            if (name != self.active_pins.setdefault(pin_id, name)
-                and self.validate_aliases):
-                raise error("pin %s is an alias for %s" % (
-                    name, self.active_pins[pin_id]))
-            if pin_id in self.reserved:
-                raise error("pin %s is reserved for %s" % (
-                    name, self.reserved[pin_id]))
-            return m.group('prefix') + str(pin_id)
+            names = m.group('names')
+            pin_id = ""
+            for name in names.split(','):
+                pin_id = pin_id + str(self.aliases.get(name, name))
+                if (name != self.active_pins.setdefault(pin_id, name)
+                    and self.validate_aliases):
+                    raise error("pin %s is an alias for %s" % (
+                        name, self.active_pins[pin_id]))
+                if pin_id in self.reserved:
+                    raise error("pin %s is reserved for %s" % (
+                        name, self.reserved[pin_id]))
+            return m.group('prefix') + pin_id
         return re_pin.sub(pin_fixup, cmd)
 
 
