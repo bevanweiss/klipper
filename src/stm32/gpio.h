@@ -55,4 +55,17 @@ void i2c_write(struct i2c_config config, uint8_t write_len, uint8_t *write);
 void i2c_read(struct i2c_config config, uint8_t reg_len, uint8_t *reg
               , uint8_t read_len, uint8_t *read);
 
+
+struct parallel_hw_config {
+    void* base_reg_addr;
+    uint8_t flags;
+    uint8_t data_width;
+};
+struct paralleldev_s; // forward declare here, the concrete type is defined in parallelcmds.h
+
+struct parallel_hw_config parallelbus_hwmode_setup(uint32_t bus, uint32_t addr_mask);
+void paralleldev_setup(struct paralleldev_s *dev);
+void paralleldev_write(struct paralleldev_s *dev, uint32_t dest_start, uint8_t dest_inc, uint8_t src_inc, uint16_t data_len, const uint8_t *src_data);
+void paralleldev_read(struct paralleldev_s *dev, uint32_t src_start, uint8_t src_inc, uint8_t dest_inc, uint16_t data_len, uint8_t *dest_data);
+
 #endif // gpio.h
