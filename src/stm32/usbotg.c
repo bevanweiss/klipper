@@ -433,8 +433,8 @@ usb_init(void)
 #endif
 
     // Route pins
-    gpio_peripheral(GPIO_D_NEG, GPIO_FUNC, 0);
-    gpio_peripheral(GPIO_D_POS, GPIO_FUNC, 0);
+    gpio_peripheral(GPIO_D_NEG, GPIO_FUNC | GPIO_OUTPUT, 0);
+    gpio_peripheral(GPIO_D_POS, GPIO_FUNC | GPIO_OUTPUT, 0);
 
     // Setup USB packet memory
     fifo_configure();

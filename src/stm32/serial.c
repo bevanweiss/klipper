@@ -91,6 +91,6 @@ serial_init(void)
     armcm_enable_irq(USARTx_IRQHandler, USARTx_IRQn, 0);
 
     gpio_peripheral(GPIO_Rx, GPIO_FUNCTION(7), 1);
-    gpio_peripheral(GPIO_Tx, GPIO_FUNCTION(7), 0);
+    gpio_peripheral(GPIO_Tx, GPIO_FUNCTION(7) | GPIO_OUTPUT, 0);
 }
 DECL_INIT(serial_init);

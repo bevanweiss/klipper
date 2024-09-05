@@ -257,7 +257,7 @@ can_init(void)
         enable_pclock((uint32_t)FILTER_CAN);
 
     gpio_peripheral(GPIO_Rx, CAN_FUNCTION, 1);
-    gpio_peripheral(GPIO_Tx, CAN_FUNCTION, 0);
+    gpio_peripheral(GPIO_Tx, CAN_FUNCTION | GPIO_OUTPUT, 0);
 
     uint32_t pclock = get_pclock_frequency((uint32_t)SOC_CAN);
 

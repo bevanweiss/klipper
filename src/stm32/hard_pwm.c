@@ -297,7 +297,7 @@ gpio_pwm_setup(uint8_t pin, uint32_t cycle_time, uint8_t val){
         prescaler = UINT16_MAX;
     }
 
-    gpio_peripheral(p->pin, p->function, 0);
+    gpio_peripheral(p->pin, p->function | GPIO_OUTPUT, 0);
 
     // Enable clock
     if (!is_enabled_pclock((uint32_t) p->timer)) {
